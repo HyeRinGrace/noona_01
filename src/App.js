@@ -69,6 +69,7 @@ function App() {
   }
 
   // 유저의 승패를 결정내주는 함수
+  /* eslint-disable */
   const winner = (user, computer) =>{
     setTotalCount(totalCount+1);
     if(user.name == computer.name){
@@ -82,6 +83,7 @@ function App() {
   }
 
   //컴퓨터의 승패를 결정내주는 함수
+  /* eslint-disable */
   const ComputerWinner = (returnJudge) =>{
     if(returnJudge == "draw"){
       return "draw"
@@ -94,6 +96,7 @@ function App() {
 
 
   // 승패 확인 후 컬러값을 지정해주는 함수
+  /* eslint-disable */
   const judgeColor = (colorChoice) => {
     if(colorChoice == "draw"){
       return "lightgray";
