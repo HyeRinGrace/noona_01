@@ -36,13 +36,14 @@ function App() {
   let [totalCount,setTotalCount] = useState(0); //총 유저가 플레이한 수
   let [winCount,setWinCount] = useState(0); //총 유저가 이긴 수
   let [loseCount,setLoseCount] = useState(0); // 총 유저가 진 수
-  let drawCount = totalCount - (winCount + loseCount);
+  let drawCount = totalCount - (winCount + loseCount); //비긴 수
 
   let [userSelect,setUserSelect] = useState(null); //유저의 상태변화에 따른 useState 값
   let [computerSelect,setComputerSelect] = useState(null); //유저가 임의의 버튼을 눌렀을 때 컴퓨터의 useState값
   let [userJudge,setUserJudge] = useState(""); //유저의 승패 useState값 
   let [computerJudge,setComputerJudge] = useState("") //컴퓨터의 승패 useState 값
-  let [color,setColor] = useState(""); //승패에 따른 테두리 색상 변화
+  let [userColor,setUserColor] = useState(""); //승패에 따른 테두리 색상 변화
+  let [computerColor,setComputerColor] = useState(""); 
 
   //유저가 임의의 버튼을 선택했을 때 실행되어야 할 함수
   const play = (userChoice) => {
@@ -54,10 +55,12 @@ function App() {
     const returnJudge = winner(choice[userChoice],choice[computerChoice]); //유저의 승패여부를 returnJudge에 담음(이걸이용해서 count쓸 수 있다.)
     ComputerWinner(returnJudge);
     setComputerJudge(ComputerWinner(returnJudge));
-    judgeColor(returnJudge);
-    setColor(judgeColor(returnJudge));
-    
 
+    userJudgeColor(returnJudge);
+    setUserColor(userJudgeColor(returnJudge));
+    
+    computerJudgeColor(returnJudge);
+    setComputerColor(computerJudgeColor(returnJudge));
   };
 
 
@@ -95,9 +98,9 @@ function App() {
   }
 
 
-  // 승패 확인 후 컬러값을 지정해주는 함수
+  // 승패 확인 후 유저의 컬러값을 지정해주는 함수
   /* eslint-disable */
-  const judgeColor = (colorChoice) => {
+  const userJudgeColor = (colorChoice) => {
     if(colorChoice == "draw"){
       return "lightgray";
     }else if(colorChoice == "win") {
@@ -109,17 +112,32 @@ function App() {
     }
   }
 
+  // 승패 확인 후 컴퓨터의 컬러값을 지정해주는 함수
+  /* eslint-disable */
+  const computerJudgeColor = (colorChoice) =>{
+    if(colorChoice == "draw"){
+      return "lightgray";
+    }else if(colorChoice == "win") {
+      return "tomato";
+    }else if(colorChoice == "lose"){
+      return "yellowgreen";
+    }
+  }
 
+  function ResetBtn(){
+    window.location.reload();
+  }
 
   // 화면에 보여지는 부분
   return (
     <div>
       <Counter count = {totalCount} winCount = {winCount} loseCount = {loseCount} drawCount = {drawCount}/>
     <div className='main'> 
-      <Box title = "You" item={userSelect} result = {userJudge} color = {color}/>
-      <Box title = "Computer" item = {computerSelect} result = {computerJudge}/>
+      <Box title = "You" item={userSelect} result = {userJudge} color = {userColor}/>
+      <Box title = "Computer" item = {computerSelect} result = {computerJudge} color = {computerColor}/>
     </div>
     <div className="buttons">
+      <button className = "ResetBtn" onClick = {ResetBtn}>Reset</button>
       <button onClick={()=>play('scissor')}>가위</button>
       <button onClick={()=>play("rock")}>바위</button>
       <button onClick={()=>play("paper")}>보</button>
